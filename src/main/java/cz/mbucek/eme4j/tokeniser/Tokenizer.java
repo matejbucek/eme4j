@@ -1,3 +1,19 @@
+/*
+ * Copyright 2022 Matěj Bucek
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cz.mbucek.eme4j.tokeniser;
 
 import java.util.ArrayList;
@@ -5,8 +21,16 @@ import java.util.List;
 import java.util.Stack;
 
 import cz.mbucek.eme4j.exceptions.OperatorTokenizationException;
+import cz.mbucek.eme4j.general.Expression;
 import cz.mbucek.eme4j.general.ExpressionContext;
 
+/**
+ * This class is used by {@link Expression} to tokenize
+ * and evaluate all the expressions.
+ * 
+ * @author Matěj Bucek
+ *
+ */
 public class Tokenizer {
 
 	private ExpressionContext context;
@@ -15,6 +39,12 @@ public class Tokenizer {
 		this.context = context;
 	}
 
+	/**
+	 * Tokenizes a math expression.
+	 * @param expression {@link String} that would be tokenized
+	 * @return {@link List} of tokens in unchanged order
+	 * @throws OperatorTokenizationException
+	 */
 	public List<Token> tokenize(String expression) throws OperatorTokenizationException{
 		var i = 0;
 		var chars = expression.toCharArray();
@@ -103,6 +133,12 @@ public class Tokenizer {
 		return Character.isLetter(value);
 	}
 
+	/**
+	 * Used to convert tokenized string from in-fix to the post-fix form.
+	 * It is an implementation of Shunting-yard algorithm.
+	 * @param tokens list of tokens in in-fix form
+	 * @return list of tokens in post-fix form
+	 */
 	public List<Token> toRPN(List<Token> tokens){
 		var orderedTokens = new ArrayList<Token>();
 		var stack = new Stack<Token>();
@@ -142,6 +178,11 @@ public class Tokenizer {
 		return (o1.isRightAssociative())? o1.getPrecedence() < o2.getPrecedence() : o1.getPrecedence() <= o2.getPrecedence();
 	}
 
+	/**
+	 * This function is used when evaluating an expression.
+	 * @param tokens list of tokens in post-fix form
+	 * @return result value
+	 */
 	public double evalueate(List<Token> tokens) {
 		List<Token> withValues = null;
 		for(var variable : context.getVariables()) {
