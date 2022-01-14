@@ -11,5 +11,6 @@ import java.lang.annotation.Target;
 public @interface OperatorDescriptor {
 	public String[] signature();
 	public boolean rightAssociative() default false;
+	public boolean oneArg() default false;
 	public int precedence();
 }

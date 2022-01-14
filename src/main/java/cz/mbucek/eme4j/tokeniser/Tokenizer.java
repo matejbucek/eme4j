@@ -139,7 +139,7 @@ public class Tokenizer {
 	}
 
 	private boolean isHigherPrecedence(OperatorToken o1, OperatorToken o2) {
-		return (o1.rightAssociative())? o1.getPrecedence() < o2.getPrecedence() : o1.getPrecedence() <= o2.getPrecedence();
+		return (o1.isRightAssociative())? o1.getPrecedence() < o2.getPrecedence() : o1.getPrecedence() <= o2.getPrecedence();
 	}
 
 	public double evalueate(List<Token> tokens) {
@@ -165,10 +165,18 @@ public class Tokenizer {
 					}
 					stack.push(new NumberToken(f.apply(values)));
 				} else if(token instanceof OperatorToken o) {
-					if(stack.pop() instanceof NumberToken n1 && stack.pop() instanceof NumberToken n0) {
-						stack.push(new NumberToken(o.apply(n0.getValue(), n1.getValue())));
+					if(!o.isOneArg()) {
+						if(stack.pop() instanceof NumberToken n1 && stack.pop() instanceof NumberToken n0) {
+							stack.push(new NumberToken(o.apply(n0.getValue(), n1.getValue())));
+						} else {
+							throw new RuntimeException();
+						}
 					} else {
-						throw new RuntimeException();
+						if(stack.pop() instanceof NumberToken n0) {
+							stack.push(new NumberToken(o.apply(n0.getValue())));
+						} else {
+							throw new RuntimeException();
+						}
 					}
 				} else if(token instanceof ConstantToken c) {
 					stack.push(new NumberToken(c.getValue()));

@@ -16,8 +16,12 @@ public class OperatorToken extends Token {
 		return pair.key().precedence();
 	}
 	
-	public boolean rightAssociative() {
+	public boolean isRightAssociative() {
 		return pair.key().rightAssociative();
+	}
+	
+	public boolean isOneArg() {
+		return pair.key().oneArg();
 	}
 	
 	public double apply(double... args) {
