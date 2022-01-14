@@ -79,6 +79,7 @@ Java library, that makes it easier to work with Mathematical Expressions.
 * Sets
 * Guides 
 * Documentation (JavaDoc)
+* Tests (JUnit)
 
 ## Build
 
