@@ -190,7 +190,7 @@ public class Tokenizer {
 		}
 		
 		if(withValues == null) withValues = tokens;
-		
+		//System.out.println(withValues);
 		var stack = new Stack<Token>();
 		
 		for(var token : withValues) {
@@ -207,7 +207,13 @@ public class Tokenizer {
 					stack.push(new NumberToken(f.apply(values)));
 				} else if(token instanceof OperatorToken o) {
 					if(!o.isOneArg()) {
-						if(stack.pop() instanceof NumberToken n1 && stack.pop() instanceof NumberToken n0) {
+						
+						if(o.isModifier() && stack.size() == 1) {
+							stack.push(new NumberToken(o.modify(((NumberToken)stack.pop()).getValue())));
+							continue;
+						}
+						
+						if (stack.pop() instanceof NumberToken n1 && stack.pop() instanceof NumberToken n0) {
 							stack.push(new NumberToken(o.apply(n0.getValue(), n1.getValue())));
 						} else {
 							throw new RuntimeException();
@@ -224,10 +230,11 @@ public class Tokenizer {
 				}
 			}
 		}
-		if(stack.pop() instanceof NumberToken n)
+		if(stack.pop() instanceof NumberToken n) {
 			return n.getValue();
+		}
 		else
 			throw new RuntimeException();
 	}
-
+	
 }

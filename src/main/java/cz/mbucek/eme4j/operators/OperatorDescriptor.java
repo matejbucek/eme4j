@@ -55,4 +55,6 @@ public @interface OperatorDescriptor {
 	 * @return the precedence of the operator
 	 */
 	public int precedence();
+	
+	public boolean modifier() default false;
 }

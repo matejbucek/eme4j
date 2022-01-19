@@ -43,6 +43,14 @@ public class OperatorToken extends Token {
 	public double apply(double... args) {
 		return pair.value().apply(args);
 	}
+	
+	public boolean isModifier() {
+		return pair.key().modifier();
+	}
+	
+	public double modify(double n) {
+		return Double.parseDouble(pair.key().signature()[0] + String.valueOf(n));
+	}
 
 	@Override
 	public String toString() {

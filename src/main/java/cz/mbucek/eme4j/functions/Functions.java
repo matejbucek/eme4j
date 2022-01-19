@@ -16,6 +16,8 @@
 
 package cz.mbucek.eme4j.functions;
 
+import java.util.Random;
+
 /**
  * All the functions defined by this library should
  * be declared and defined in this file.
@@ -36,4 +38,27 @@ public class Functions {
 	
 	@FunctionDescriptor(signature = "cotg", args = 1)
 	public static final Function COTG = (x) -> 1 / Math.tan(x[0]);
+	
+	@FunctionDescriptor(signature = "rad", args = 1)
+	public static final Function RAD = (x) -> Math.toRadians(x[0]);
+	
+	@FunctionDescriptor(signature = "deg", args = 1)
+	public static final Function DEG = (x) -> Math.toDegrees(x[0]);
+	
+	/**
+	 * Calculates a logarithm of base x[0] from number x[1];
+	 * 
+	 * <code>log(b, n)</code> is a <code>log<sub>b</sub>(n)</code>
+	 */
+	@FunctionDescriptor(signature = "log", args = 2)
+	public static final Function LOG = (x) -> Math.log(x[1]) / Math.log(x[0]);
+	
+	@FunctionDescriptor(signature = "abs", args = 1)
+	public static final Function ABS = (x) -> Math.abs(x[0]);
+	
+	@FunctionDescriptor(signature = "random", args = 2)
+	public static final Function RANDOM = (x) -> {var r = new Random(); return r.nextDouble(x[0], x[1]);};
+	
+	@FunctionDescriptor(signature = "round", args = 1)
+	public static final Function ROUND = (x) -> Math.round(x[0]);
 }

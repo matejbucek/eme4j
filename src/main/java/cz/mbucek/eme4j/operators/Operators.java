@@ -29,13 +29,13 @@ import cz.mbucek.eme4j.functions.Function;
  */
 public class Operators {
 
-	@OperatorDescriptor(signature = "+", precedence = 2)
+	@OperatorDescriptor(signature = "+", precedence = 2, modifier = true)
 	public static final Function ADD = (x) -> x[0] + x[1];
 	
 	@OperatorDescriptor(signature = "*", precedence = 3)
 	public static final Function MULTIPLY = (x) -> x[0] * x[1];
 	
-	@OperatorDescriptor(signature = {"-", "–"}, precedence = 2)
+	@OperatorDescriptor(signature = {"-", "–"}, precedence = 2, modifier = true)
 	public static final Function SUBTRACT = (x) -> x[0] - x[1];
 	
 	@OperatorDescriptor(signature = "/", precedence = 4)
@@ -46,4 +46,7 @@ public class Operators {
 	
 	@OperatorDescriptor(signature = "!", rightAssociative = true, precedence = 6, oneArg = true)
 	public static final Function FACTORIAL = (x) -> LongStream.rangeClosed(1, (long) x[0]).reduce(1, (long y, long z) -> y * z);
+	
+	@OperatorDescriptor(signature = "%", precedence = 4)
+	public static final Function MODULO = (x) -> x[0] % x[1];
 }
