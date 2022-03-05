@@ -26,6 +26,8 @@ import java.util.Random;
  *
  */
 public class Functions {
+	
+	private static final Random random = new Random();
 
 	@FunctionDescriptor(signature = "sin", args = 1)
 	public static final Function SIN = (x) -> Math.sin(x[0]);
@@ -35,7 +37,7 @@ public class Functions {
 	
 	@FunctionDescriptor(signature = "tan", args = 1)
 	public static final Function TAN = (x) -> Math.tan(x[0]);
-	
+
 	@FunctionDescriptor(signature = "cotg", args = 1)
 	public static final Function COTG = (x) -> 1 / Math.tan(x[0]);
 	
@@ -57,8 +59,21 @@ public class Functions {
 	public static final Function ABS = (x) -> Math.abs(x[0]);
 	
 	@FunctionDescriptor(signature = "random", args = 2)
-	public static final Function RANDOM = (x) -> {var r = new Random(); return r.nextDouble(x[0], x[1]);};
+	public static final Function RANDOM = (x) -> random.nextDouble(x[0], x[1]);
 	
 	@FunctionDescriptor(signature = "round", args = 1)
 	public static final Function ROUND = (x) -> Math.round(x[0]);
+	
+	@FunctionDescriptor(signature = "lcm", args = 2)
+	public static final Function LCM = (x) -> Math.abs(x[0] * x[1]) / gcd(x[0], x[1]);
+	
+	@FunctionDescriptor(signature = "ctf", args = 2)
+	public static final Function CTF = (x) -> LCM.apply(x[0] - 1, x[1] - 1);
+	
+	@FunctionDescriptor(signature = "gcd", args = 2)
+	public static final Function GCD = (x) -> gcd(x[0], x[1]);
+	
+	private static double gcd(double a, double b) {
+		return (b == 0)? a : gcd(b, a % b);
+	}
 }
