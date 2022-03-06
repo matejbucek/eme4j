@@ -21,4 +21,19 @@
 			<url>https://maven.pkg.github.com/matejbucek/eme4j</url>
 		</repository>
 	</distributionManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<excludes>
+						<exclude>**/cz/mbucek/eme4j/Main.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
